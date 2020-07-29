@@ -28,24 +28,35 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
+            this.LabelSum = new System.Windows.Forms.Label();
+            this.LabelResult = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // label1
+            // LabelSum
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 13);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(35, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "label1";
+            this.LabelSum.AutoSize = true;
+            this.LabelSum.Location = new System.Drawing.Point(13, 13);
+            this.LabelSum.Name = "LabelSum";
+            this.LabelSum.Size = new System.Drawing.Size(35, 13);
+            this.LabelSum.TabIndex = 0;
+            this.LabelSum.Text = "label1";
+            // 
+            // LabelResult
+            // 
+            this.LabelResult.AutoSize = true;
+            this.LabelResult.Location = new System.Drawing.Point(13, 30);
+            this.LabelResult.Name = "LabelResult";
+            this.LabelResult.Size = new System.Drawing.Size(35, 13);
+            this.LabelResult.TabIndex = 1;
+            this.LabelResult.Text = "label1";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.LabelResult);
+            this.Controls.Add(this.LabelSum);
             this.Name = "Form1";
             this.Text = "Form1";
             this.ResumeLayout(false);
@@ -55,7 +66,8 @@
 
         #endregion
 
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label LabelSum;
+        private System.Windows.Forms.Label LabelResult;
     }
 }
 

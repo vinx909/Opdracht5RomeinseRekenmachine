@@ -10,43 +10,40 @@ namespace Opdracht5RomeinseRekenmachine
 {
     class RomanNumberConverter
     {
-        private static List<RomanNumberInstances> instances;
+        private static List<RomanNumberInstance> instances;
 
         private static void CreateInstances()
         {
             if (instances == null)
             {
-                instances = new List<RomanNumberInstances>();
-                RomanNumberInstances one = new RomanNumberInstances(1, 'I', null, null);
+                instances = new List<RomanNumberInstance>();
+                RomanNumberInstance one = new RomanNumberInstance(1, 'I', null, null);
                 instances.Add(one);
-                RomanNumberInstances five = new RomanNumberInstances(5, 'V', one, one);
+                RomanNumberInstance five = new RomanNumberInstance(5, 'V', one, one);
                 instances.Add(five);
-                RomanNumberInstances ten = new RomanNumberInstances(10, 'X', one, null);
+                RomanNumberInstance ten = new RomanNumberInstance(10, 'X', one, null);
                 instances.Add(ten);
-                RomanNumberInstances fifty = new RomanNumberInstances(50, 'L', ten, ten);
+                RomanNumberInstance fifty = new RomanNumberInstance(50, 'L', ten, ten);
                 instances.Add(fifty);
-                RomanNumberInstances hundered = new RomanNumberInstances(100, 'C', ten, null);
+                RomanNumberInstance hundered = new RomanNumberInstance(100, 'C', ten, null);
                 instances.Add(hundered);
-                RomanNumberInstances fivehundered = new RomanNumberInstances(500, 'D', hundered, hundered);
-                instances.Add(hundered);
-                RomanNumberInstances thousand = new RomanNumberInstances(1000, 'M', hundered, null);
+                RomanNumberInstance fivehundered = new RomanNumberInstance(500, 'D', hundered, hundered);
+                instances.Add(fivehundered);
+                RomanNumberInstance thousand = new RomanNumberInstance(1000, 'M', hundered, null);
                 instances.Add(thousand);
             }
         }
 
         internal static int ConvertToNumber(string RomanNumber)
         {
-            if (instances == null)
-            {
-                CreateInstances();
-            }
+            CreateInstances();
             char[] characters = RomanNumber.ToCharArray();
-            RomanNumberInstances highestInstance = null;
+            RomanNumberInstance highestInstance = null;
             int totalNumber=0;
             for (int i = characters.Length - 1; i >= 0; i--)
             {
                 bool found = false;
-                foreach (RomanNumberInstances instance in instances)
+                foreach (RomanNumberInstance instance in instances)
                 {
                     if (instance.GetLetter().Equals(characters[i]))
                     {
@@ -108,13 +105,10 @@ namespace Opdracht5RomeinseRekenmachine
             {
                 return "";
             }
-            if (instances == null)
-            {
-                CreateInstances();
-            }
-            RomanNumberInstances before=null;
-            RomanNumberInstances after=null;
-            foreach(RomanNumberInstances instance in instances)
+            CreateInstances();
+            RomanNumberInstance before=null;
+            RomanNumberInstance after=null;
+            foreach(RomanNumberInstance instance in instances)
             {
                 int instanceNumber = instance.GetNumber();
                 if (numberToConvert == instanceNumber)
@@ -137,7 +131,7 @@ namespace Opdracht5RomeinseRekenmachine
                 }
             }
             if (after != null) {
-                foreach (RomanNumberInstances instance in instances)
+                foreach (RomanNumberInstance instance in instances)
                 {
                     if (after.AllowedBefore(instance))
                     {
@@ -163,7 +157,7 @@ namespace Opdracht5RomeinseRekenmachine
                     }
                     else if(before.GetNumber() * amountOfBefores > numberToConvert)
                     {
-                        foreach (RomanNumberInstances instance in instances)
+                        foreach (RomanNumberInstance instance in instances)
                         {
                             if (before.AllowedAfter(instance))
                             {
@@ -200,14 +194,37 @@ namespace Opdracht5RomeinseRekenmachine
             throw new NotImplementedException();
         }
 
-        private class RomanNumberInstances
+        internal static char[] GetNumericals()
+        {
+            CreateInstances();
+            char[] toReturn = new char[instances.Count];
+            for(int i=0;i<toReturn.Length;i++)
+            {
+                toReturn[i] = instances[i].GetLetter();
+            }
+            return toReturn;
+        }
+        internal static bool IsRomanNumerical(char numerical)
+        {
+            CreateInstances();
+            foreach(RomanNumberInstance instance in instances)
+            {
+                if (numerical == instance.GetLetter())
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private class RomanNumberInstance
         {
             private int representesNumber;
             private char representedLetter;
-            private RomanNumberInstances allowedBefore;
-            private RomanNumberInstances allowedAfter;
+            private RomanNumberInstance allowedBefore;
+            private RomanNumberInstance allowedAfter;
 
-            internal RomanNumberInstances(int number, char letter, RomanNumberInstances allowedBeforeNumber, RomanNumberInstances allowedAfterNumber)
+            internal RomanNumberInstance(int number, char letter, RomanNumberInstance allowedBeforeNumber, RomanNumberInstance allowedAfterNumber)
             {
                 this.representesNumber = number;
                 this.representedLetter = letter;
@@ -223,7 +240,7 @@ namespace Opdracht5RomeinseRekenmachine
             {
                 return representedLetter;
             }
-            internal bool AllowedBefore(RomanNumberInstances number)
+            internal bool AllowedBefore(RomanNumberInstance number)
             {
                 if (number == allowedBefore)
                 {
@@ -231,7 +248,7 @@ namespace Opdracht5RomeinseRekenmachine
                 }
                 return false;
             }
-            internal bool AllowedAfter(RomanNumberInstances number)
+            internal bool AllowedAfter(RomanNumberInstance number)
             {
                 if (number == allowedAfter)
                 {
